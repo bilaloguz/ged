@@ -6,7 +6,6 @@ macro stdcall proc,[arg]
    common
     end if
     call proc }
- 
 macro invoke proc,[arg]   
  { common
     if ~ arg eq
@@ -15,7 +14,6 @@ macro invoke proc,[arg]
    common
     end if
     call [proc] }
- 
 macro ccall proc,[arg]      
  { common
     size@ccall = 0
@@ -29,7 +27,6 @@ macro ccall proc,[arg]
     if size@ccall
     add esp,size@ccall
     end if }
- 
 macro cinvoke proc,[arg] 
  { common
     size@ccall = 0
@@ -43,14 +40,11 @@ macro cinvoke proc,[arg]
     if size@ccall
     add esp,size@ccall
     end if }
- 
 macro proc [args]    
  { common
     match name params, args>
     \{ define@proc name,<params \} }
- 
 prologue@proc equ prologuedef
- 
 macro prologuedef procname,flag,parmbytes,localbytes,reglist
  { if parmbytes | localbytes
     push ebp
@@ -60,9 +54,7 @@ macro prologuedef procname,flag,parmbytes,localbytes,reglist
     end if
    end if
    irps reg, reglist \{ push reg \} }
- 
 epilogue@proc equ epiloguedef
- 
 macro epiloguedef procname,flag,parmbytes,localbytes,reglist
  { irps reg, reglist \{ reverse pop reg \}
    if parmbytes | localbytes
@@ -73,7 +65,6 @@ macro epiloguedef procname,flag,parmbytes,localbytes,reglist
    else
     retn parmbytes
    end if }
- 
 macro define@proc name,statement
  { local params,flag,regs,parmbytes,localbytes,current
    if used name
@@ -130,7 +121,6 @@ macro define@proc name,statement
                           \\\{ epilogue name,flag,parmbytes,localbytes,reglist \\\} \\} \}
    macro finish@proc \{ localbytes = (((current-1) shr 2)+1) shl 2
                         end if \} }
- 
 macro defargs@proc [arg]
  { common
     if ~ arg eq
@@ -159,7 +149,6 @@ macro defargs@proc [arg]
      restore current@arg
    common
     end if }
- 
 macro deflocal@proc name,def,[val]
  { common
     match vars, all@vars \{ all@vars equ all@vars, \}
@@ -175,7 +164,6 @@ macro deflocal@proc name,def,[val]
         virtual at tmp\}
    common
     match first rest, ..var, \{ name equ first \} }
- 
 macro initlocal@proc name,def
  { virtual at name
     def
@@ -205,7 +193,6 @@ macro initlocal@proc name,def
     end if
     position@initlocal = position@initlocal + current@initlocal
    end while }
- 
 macro endp
  { purge ret,locals,endl
    finish@proc
@@ -214,7 +201,6 @@ macro endp
    match all,args@proc \{ restore all \}
    restore args@proc
    match all,all@vars \{ restore all \} }
- 
 macro local [var]
  { common
     locals
