@@ -1,6 +1,3 @@
-$Revision: 750 $
- 
-
 macro iglobal {
   IGlobals equ IGlobals,
   macro __IGlobalBlock { }
